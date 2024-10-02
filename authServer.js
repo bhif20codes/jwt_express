@@ -4,6 +4,11 @@ require("dotenv").config()
 // import express library and use it
 const express = require("express")
 const app = express()
+const cors = require("cors")
+
+app.use(cors({
+    origin: '*' // Allow specific origin
+}));
 
 // use jwt library for the authentication with JWTs
 const jwt = require("jsonwebtoken")
@@ -39,6 +44,8 @@ app.post("/login", (req, res) => {
     // Authentication of user with jwt
     const username = req.body.username
 
+    console.log(refreshTokens)
+
     const user = {
         name: username
     }
@@ -57,8 +64,8 @@ app.post("/login", (req, res) => {
 
 function generateAccessToken(user) {
     // returns new jwt with the secret from the .env file with expiration date of 30 minutes
-    return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '15s'})
+    return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '10s'})
 }
 
-// let the auth server run on port 4000
-app.listen(4000)
+// let the auth server run on port 4001
+app.listen(4001)

@@ -4,6 +4,11 @@ require("dotenv").config()
 // import express library and use it
 const express = require("express")
 const app = express()
+const cors = require("cors")
+
+app.use(cors({
+    origin: '*' // Allow specific origin
+}));
 
 // use jwt library for the authentication with JWTs
 const jwt = require("jsonwebtoken")
@@ -22,7 +27,7 @@ const postData = [
     }
 ]
 
-app.get("/post", authenticateToken, (req, res) => {
+app.get("/home", authenticateToken, (req, res) => {
     res.json(postData.filter(post => post.username === req.user.name))
 })
 
@@ -45,5 +50,5 @@ function authenticateToken(req, res, next) {
     })
 }
 
-// start the server and on port 3000
-app.listen(3000)
+// start the server and on port 4000
+app.listen(4000)
